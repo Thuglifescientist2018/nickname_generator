@@ -29,21 +29,42 @@ function nameDisplay(name) {
 }
 
    const learnMoreBtn = document.querySelector("#learnMore");
-  
+    const outputbox = document.querySelector("#outputbox");
    learnMoreBtn.addEventListener("click", learnMoreInfo);
     function learnMoreInfo() {
         let i = 0;
         let element = document.createElement('div');
-        element.setAttribute("class", "bg-dark p-4");
-        element.style.height = "300px";
-        element.style.width = "300px";
+        element.setAttribute("class", "bg-white text-dark p-4");
+        element.style.position = "relative";
+        element.style.transition = "1s all";    
+        element.style.top = "-40vh";
+        element.style.border = "2px solid black";
+        element.style.height = "50vh";
+        element.style.width = "50vw";
         element.style.color = "white";
-        element.innerHTML = "<h1> hello world </h1>"
-        this.appendChild(element);
-        console.log(i);
-        if(i > 1) {
-            element.remove();
-        }
-        i++;
+   
+        const htmlInfo = fetch('info.html').then(res => res.text()).then(info => {
+            element.innerHTML += info;
+            let close = document.createElement('i');
+            close.style.position = "absolute";
+            close.style.top = "20px";
+            close.style.left = "50%"; 
+            close.style.background = "black";
+            close.style.padding = "10px";
+        
+            close.style.borderRadius = "50%";
+            close.style.color = "white";
+            close.setAttribute("class", "fas fa-times");
+           element.appendChild(close);
+           close.addEventListener("click", function(){
+               element.remove();
+           })
+        }).catch(console.error('something went wrong'));
+        const lead = document.querySelector(".lead:last-child");
+        element.style.position = "relative";
+        element.style.margin = "0 auto";
+        lead.insertBefore(element, learnMoreBtn);
+        
+       
     }
 
